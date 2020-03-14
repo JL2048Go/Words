@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         clear = findViewById(R.id.button3);
         recyclerView = findViewById(R.id.recyclerView);
         aSwitch = findViewById(R.id.switch1);
-        myAdapter = new MyAdapter(false);
-        myAdapter1 = new MyAdapter(true);
+        myAdapter = new MyAdapter(false, wordViewModel);
+        myAdapter1 = new MyAdapter(true, wordViewModel);
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -54,10 +54,14 @@ public class MainActivity extends AppCompatActivity {
         wordViewModel.getAllWordsLive().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
+                int tmp = myAdapter.getItemCount();
                 myAdapter.setAllWords(words);
                 myAdapter1.setAllWords(words);
-                myAdapter.notifyDataSetChanged();
-                myAdapter1.notifyDataSetChanged();
+                if (tmp != words.size()){
+                    myAdapter.notifyDataSetChanged();
+                    myAdapter1.notifyDataSetChanged();
+                }
+
             }
         });
 
