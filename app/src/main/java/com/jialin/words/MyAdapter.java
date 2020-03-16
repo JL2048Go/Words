@@ -1,4 +1,4 @@
-package com.jialin.wordtest;
+package com.jialin.words;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -40,23 +40,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         } else {
             itemView = layoutInflater.inflate(R.layout.cell_normal_1, parent, false);
         }
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        final Word word = allWords.get(position);
-        holder.textViewNumber.setText(String.valueOf(position+1));
-        holder.textViewEnglish.setText(String.valueOf(word.getWord()));
-        holder.textViewChinese.setText(String.valueOf(word.getChineseMeaning()));
-        holder.aSwitchChineseInvisible.setOnCheckedChangeListener(null);
-        if (word.isChineseInvisible()){
-            holder.textViewChinese.setVisibility(View.GONE);
-            holder.aSwitchChineseInvisible.setChecked(true);
-        } else {
-            holder.aSwitchChineseInvisible.setVisibility(View.VISIBLE);
-            holder.aSwitchChineseInvisible.setChecked(false);
-        }
+        final MyViewHolder holder = new MyViewHolder(itemView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.aSwitchChineseInvisible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Word word = (Word)holder.itemView.getTag(R.id.word_for_view_holder);
                 if (isChecked){
                     holder.textViewChinese.setVisibility(View.GONE);
                     word.setChineseInvisible(true);
@@ -80,6 +65,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 }
             }
         });
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+        final Word word = allWords.get(position);
+        holder.itemView.setTag(R.id.word_for_view_holder, word);
+        holder.textViewNumber.setText(String.valueOf(position+1));
+        holder.textViewEnglish.setText(String.valueOf(word.getWord()));
+        holder.textViewChinese.setText(String.valueOf(word.getChineseMeaning()));
+        if (word.isChineseInvisible()){
+            holder.textViewChinese.setVisibility(View.GONE);
+            holder.aSwitchChineseInvisible.setChecked(true);
+        } else {
+            holder.aSwitchChineseInvisible.setVisibility(View.VISIBLE);
+            holder.aSwitchChineseInvisible.setChecked(false);
+        }
 
     }
 

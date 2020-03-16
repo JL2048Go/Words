@@ -1,4 +1,4 @@
-package com.jialin.wordtest;
+package com.jialin.words;
 
 import org.junit.Test;
 
