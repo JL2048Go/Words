@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 
 import org.w3c.dom.Text;
 
@@ -56,7 +57,7 @@ public class AddFragment extends Fragment {
         editTextEnglish.requestFocus();
         InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(editTextEnglish, 0);
-        //监听输入，输入完之后添加按钮可以点击
+        //监听输入，输入完之后才可以点击添加按钮
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -86,6 +87,7 @@ public class AddFragment extends Fragment {
                 wordViewModel.insertWords(word);
                 NavController navController = Navigation.findNavController(v);
                 navController.navigateUp();
+                //添加之后返回word页面，收起阮键盘
                 InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }

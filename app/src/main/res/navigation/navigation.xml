@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/wordsFragment"
         android:name="com.jialin.words.WordsFragment"
-        android:label="fragment_words"
+        android:label="words"
         tools:layout="@layout/fragment_words" >
         <action
             android:id="@+id/action_wordsFragment_to_addFragment"
@@ -18,6 +18,6 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.jialin.words.AddFragment"
-        android:label="fragment_add"
+        android:label="add"
         tools:layout="@layout/fragment_add" />
 </navigation>
